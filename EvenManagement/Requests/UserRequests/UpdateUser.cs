@@ -1,4 +1,4 @@
-﻿namespace EvenManagement.Requests
+﻿namespace EvenManagement.Requests.UserRequests
 {
     public class UpdateUser
     {

@@ -1,15 +1,16 @@
-﻿namespace EvenManagement.Responses
+﻿namespace EvenManagement.Responses.UserResponse
 {
     public class UserSucess
     {
         public int code { get; set; }
         public string Message { get; set; } = string.Empty;
 
-        public UserSucess(int code, string Message) { 
-        
+        public UserSucess(int code, string Message)
+        {
+
             this.code = code;
             this.Message = Message;
-        
+
         }
 
     }

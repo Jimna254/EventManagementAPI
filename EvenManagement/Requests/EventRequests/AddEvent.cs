@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EvenManagement.Requests
+namespace EvenManagement.Requests.EventRequests
 {
     public class AddEvent
     {

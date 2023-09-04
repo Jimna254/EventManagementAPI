@@ -17,7 +17,7 @@
 
         public DateTime Date { get; set; }
 
-        public IEnumerable<User> Registered_Users { get; set; } = new List<User>();
+        public List<User> Registered_Users { get; set; } = new List<User>();
 
     }
 }

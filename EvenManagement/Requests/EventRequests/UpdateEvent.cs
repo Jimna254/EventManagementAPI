@@ -1,8 +1,7 @@
-﻿namespace EvenManagement.Responses
+﻿namespace EvenManagement.Requests.EventRequests
 {
-    public class EventResponse
+    public class UpdateEvent
     {
-        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
@@ -14,5 +13,6 @@
         public int TicketAmount { get; set; }
 
         public DateTime Date { get; set; }
+
     }
 }

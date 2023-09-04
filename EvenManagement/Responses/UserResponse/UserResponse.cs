@@ -1,4 +1,4 @@
-﻿namespace EvenManagement.Responses
+﻿namespace EvenManagement.Responses.UserResponse
 {
     public class UserResponse
     {
@@ -7,6 +7,7 @@
 
         public string UserEmail { get; set; } = string.Empty;
 
+        public string Role { get; set; } = "User";
         public int PhoneNumber { get; set; }
 
     }

@@ -1,7 +1,9 @@
 ﻿using EvenManagement.Entities;
-using EvenManagement.Requests;
-using EvenManagement.Responses;
 using AutoMapper;
+using EvenManagement.Requests.UserRequests;
+using EvenManagement.Requests.EventRequests;
+using EvenManagement.Responses.EventResponse;
+using EvenManagement.Responses.UserResponse;
 
 namespace EvenManagement.Profiles
 {
@@ -13,6 +15,7 @@ namespace EvenManagement.Profiles
             CreateMap<UserResponse, User>().ReverseMap();
             CreateMap<AddEvent , Event>().ReverseMap();
             CreateMap<EventResponse, Event>().ReverseMap();
+            CreateMap<EventRegister , User>().ReverseMap();
         }
         
     }

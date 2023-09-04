@@ -1,4 +1,6 @@
 ﻿using EvenManagement.Entities;
+using EvenManagement.Requests.EventRequests;
+using EvenManagement.Requests.UserRequests;
 
 namespace EvenManagement.Services.IServices
 {
@@ -13,7 +15,13 @@ namespace EvenManagement.Services.IServices
         Task<User> GetUserAsync(Guid Userid);
 
         Task<ICollection<User>> GetAllUsersAsync();
-
-
+        //get user by email
+        Task<User> GetUserbyEmailasync(string email);
+        //login
+        Task<string> Loginasync(LoginUser loginrequest);
+        
+ 
+        Task<string> RegisterEventAsync(EventRegister eventRegister);
+        
     }
 }

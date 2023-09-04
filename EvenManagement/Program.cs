@@ -1,4 +1,6 @@
+using Auth.Extensions;
 using EvenManagement.Data;
+using EvenManagement.Extension;
 using EvenManagement.Services;
 using EvenManagement.Services.IServices;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +26,19 @@ builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IEventServices, EventServices>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+//Authentication
+builder.AddAppAuthentication();
+//Authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("Role", "Admin");
+    });
+});
 
-
+builder.AddSwaggenGenExtension();
 
 var app = builder.Build();
 
@@ -38,6 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

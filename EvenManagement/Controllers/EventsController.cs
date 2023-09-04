@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using EvenManagement.Entities;
-using EvenManagement.Requests;
-using EvenManagement.Responses;
+using EvenManagement.Requests.EventRequests;
+using EvenManagement.Responses.EventResponse;
+using EvenManagement.Responses.UserResponse;
 using EvenManagement.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +12,7 @@ namespace EvenManagement.Controllers
 {
     [Route("Events")]
     [ApiController]
+    [Authorize]
     public class EventsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -22,6 +25,7 @@ namespace EvenManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize (Policy = "Admin")]
         public async Task<ActionResult<EventSuccess>> AddEvent(AddEvent newEvent)
         {
             var _event = _mapper.Map<Event>(newEvent);
@@ -31,9 +35,9 @@ namespace EvenManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EventResponse>>> GetAllEventsAsync()
+        public async Task<ActionResult<IEnumerable<EventResponse>>> GetAllEventsAsync(string? location)
         {
-            var response = await _eventSevice.GetAllEventsAsync();
+            var response = await _eventSevice.GetAllEventsAsync(location);
             var _events = _mapper.Map<IEnumerable<EventResponse>>(response);
             return Ok(_events);
         }
@@ -72,6 +76,34 @@ namespace EvenManagement.Controllers
 
             var res = await _eventSevice.DeleteEventAsync(response);
             return Ok(new EventSuccess(204, res));
+        }
+
+        // an endpoint to show all users registered for an event
+
+        [HttpGet("users")]
+        public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllUsersRegisteredForAnEvent(Guid id)
+        {
+            var response = await _eventSevice.GetEventAsync(id);
+            if (response == null)
+            {
+                return NotFound(new EventSuccess(404, "Event Does Not Exist"));
+            }
+            var usersregistered = await _eventSevice.GetAllUsersRegisteredForAnEvent(id);
+            var users = _mapper.Map<IEnumerable<UserResponse>>(usersregistered);
+            return Ok(users);
+        }
+
+        //An endpoint to show available slots showif the event is not full yet.
+        [HttpGet("slots")]
+        public async Task<ActionResult<IEnumerable<UserResponse>>> GetAvailableSlots(Guid id)
+        {
+            var response = await _eventSevice.GetEventAsync(id);
+            if (response == null)
+            {
+                return NotFound(new EventSuccess(404, "Event Does Not Exist"));
+            }
+            int slots = await _eventSevice.AvailableSlots(id);
+            return Ok(slots);
         }
 
     }

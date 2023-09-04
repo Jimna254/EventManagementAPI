@@ -1,4 +1,4 @@
-﻿namespace EvenManagement.Responses
+﻿namespace EvenManagement.Responses.EventResponse
 {
     public class EventSuccess
     {
